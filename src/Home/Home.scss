@@ -1,0 +1,10 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .posts-container {
+    width: 500px;
+  }
+}
+
