@@ -17,8 +17,8 @@ const Post = ({ post }) => {
     <Card className={"post-container"}>
       <CardHeader
         className={"header"}
-        title={post.user.name}
-        subheader={moment(post.date).fromNow()}
+        title={post.user.username}
+        subheader={moment(post.creationDate).fromNow()}
       />
       <CardContent className={"content"}>
         <span>{post.content}</span>
