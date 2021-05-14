@@ -13,12 +13,11 @@ const Home = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     const body = {
       content: e.target[0].value,
       username: e.target[1].value,
     };
-    const response = await http.post("post", body);
+    const response = await http.post("posts", body);
   };
 
   return (
@@ -26,7 +25,7 @@ const Home = () => {
       <span className={"title"}>Home</span>
       <form onSubmit={handleSubmit}>
         <input type={"text"} placeholder={"content"} />
-        <input type={"textarea"} placeholder={"message"} />
+        <input type={"textarea"} placeholder={"username"} />
         <button type={"submit"}>Send</button>
       </form>
       <div className={"posts-container"}>
