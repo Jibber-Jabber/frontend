@@ -4,46 +4,31 @@ import Post from "./Post/Post";
 import * as http from "../utils/http";
 
 const Home = () => {
-  /*const postList = [
-    {
-      content: "Esto es un nuevo Post",
-      user: {
-        name: "Juan Pepito",
-      },
-      date: new Date().toLocaleDateString(),
-      likeCount: 10,
-      commentCount: 5,
-    },
-    {
-      content: "Otro Postt",
-      user: {
-        name: "Juan Pepito",
-      },
-      date: new Date().toLocaleDateString(),
-      likeCount: 8,
-      commentCount: 4,
-    },
-    {
-      content: "Prueba de Post",
-      user: {
-        name: "Juan Pepito",
-      },
-      date: new Date().toLocaleDateString(),
-      likeCount: 5,
-      commentCount: 2,
-    },
-  ];*/
   const [postList, setPostList] = useState([]);
 
   useEffect(async () => {
     const response = await http.get("posts");
 
     setPostList(response);
-  });
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const body = {
+      content: e.target[0].value,
+      username: e.target[1].value,
+    };
+    const response = await http.post("post", body);
+  };
 
   return (
     <div className="home-container">
       <span className={"title"}>Home</span>
+      <form onSubmit={handleSubmit}>
+        <input type={"text"} placeholder={"content"} />
+        <input type={"textarea"} placeholder={"message"} />
+        <button type={"submit"}>Send</button>
+      </form>
       <div className={"posts-container"}>
         {postList?.map((post) => (
           <Post post={post} />
