@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import Post from "./Post/Post";
+import * as http from "../utils/http";
 
 const Home = () => {
-  const postList = [
+  /*const postList = [
     {
       content: "Esto es un nuevo Post",
       user: {
@@ -31,13 +32,20 @@ const Home = () => {
       likeCount: 5,
       commentCount: 2,
     },
-  ];
+  ];*/
+  const [postList, setPostList] = useState([]);
+
+  useEffect(async () => {
+    const response = await http.get("posts");
+
+    setPostList(response);
+  });
 
   return (
     <div className="home-container">
-      <span>Home</span>
+      <span className={"title"}>Home</span>
       <div className={"posts-container"}>
-        {postList.map((post) => (
+        {postList?.map((post) => (
           <Post post={post} />
         ))}
       </div>

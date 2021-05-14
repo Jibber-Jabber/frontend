@@ -1,21 +1,39 @@
 import React from "react";
 import "./Post.scss";
+import moment from "moment";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  IconButton,
+} from "@material-ui/core";
+
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 
 const Post = ({ post }) => {
   return (
-    <div className={"post-container"}>
-      <div className={"header"}>
-        <span>{post.user.name}</span>
-        <span>{post.date}</span>
-      </div>
-      <div className={"content"}>
-        <textarea>{post.content}</textarea>
-      </div>
-      <div className={"footer"}>
-        <span>Likes {post.likeCount}</span>
-        <span>Comments {post.commentCount}</span>
-      </div>
-    </div>
+    <Card className={"post-container"}>
+      <CardHeader
+        className={"header"}
+        title={post.user.name}
+        subheader={moment(post.date).fromNow()}
+      />
+      <CardContent className={"content"}>
+        <span>{post.content}</span>
+      </CardContent>
+      <CardActions className={"footer"}>
+        <IconButton>
+          <FavoriteBorderIcon />
+        </IconButton>
+        <span>{post.likeCount}</span>
+        <IconButton>
+          <ChatBubbleOutlineIcon />
+        </IconButton>
+        <span>{post.commentCount}</span>
+      </CardActions>
+    </Card>
   );
 };
 
