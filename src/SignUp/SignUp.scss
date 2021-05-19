@@ -7,12 +7,15 @@
   .form-and-title-container {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    border: 1px solid white;
     align-items: center;
     padding: 50px;
 
     .signup-title {
       font-weight: bold;
+      color: orange;
+      font-size: 30px;
+      margin-bottom: 30px;
     }
 
     .signup-form {
@@ -21,10 +24,35 @@
 
       .text-field {
         margin: 20px;
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active
+        {
+          -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
+          -webkit-text-fill-color: white !important;
+        }
+
+        .MuiInputLabel-outlined {
+          color: white;
+        }
+
+        .MuiOutlinedInput-root {
+          color: white;
+        }
+
+        .MuiOutlinedInput-notchedOutline {
+          border-color: white;
+        }
       }
 
       .submit-btn {
         margin-top: 20px;
+
+        &.MuiButton-containedPrimary {
+          background-color: orange;
+        }
       }
     }
   }
