@@ -6,10 +6,12 @@ import * as http from "../utils/http";
 const Home = () => {
   const [postList, setPostList] = useState([]);
 
-  useEffect(async () => {
-    const response = await http.get("posts");
-
-    setPostList(response);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await http.get("posts");
+      setPostList(response);
+    }
+    fetchData();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -17,7 +19,7 @@ const Home = () => {
       content: e.target[0].value,
       username: e.target[1].value,
     };
-    const response = await http.post("posts", body);
+    await http.post("posts", body);
   };
 
   return (
