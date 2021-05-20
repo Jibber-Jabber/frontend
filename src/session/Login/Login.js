@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import "./Login.scss";
-import * as http from "../utils/http";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequest, sessionSelector } from "../sessionSlice";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector(sessionSelector);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isLoggedIn) history.push("/home");
+  }, [isLoggedIn]);
+
   const initialValues = {
     username: "",
     password: "",
@@ -38,7 +49,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await http.post("auth/login", formValues);
+    dispatch(loginRequest(formValues));
   };
 
   const handleInputChange = (e) => {

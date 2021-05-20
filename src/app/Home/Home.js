@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import Post from "./Post/Post";
-import * as http from "../utils/http";
+import * as http from "../../utils/http";
 
 const Home = () => {
   const [postList, setPostList] = useState([]);

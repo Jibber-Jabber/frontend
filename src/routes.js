@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./Home/Home";
-import SignUp from "./SignUp/SignUp";
+import Home from "./app/Home/Home";
+import SignUp from "./session/SignUp/SignUp";
 import PrivateRoute from "./navigation/PrivateRoute";
-import Login from "./Login/Login";
+import Login from "./session/Login/Login";
 
-const routes = () => {
+const Routes = () => {
   return (
     <Router>
       <Switch>
@@ -17,4 +17,4 @@ const routes = () => {
   );
 };
 
-export default routes;
+export default Routes;

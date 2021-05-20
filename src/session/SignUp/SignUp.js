@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import "./SignUp.scss";
-import * as http from "../utils/http";
+import * as http from "../../utils/http";
 
 const SignUp = () => {
   const initialValues = {

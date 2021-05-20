@@ -9,7 +9,7 @@ const request = (url, method, data) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(error);
+      throw error.response || { status: 500 };
     });
 };
 
