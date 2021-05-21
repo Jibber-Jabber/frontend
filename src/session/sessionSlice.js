@@ -9,6 +9,11 @@ const initialState = {
     success: false,
     error: false,
   },
+  editProfileRequestStatus: {
+    loading: false,
+    success: false,
+    error: false,
+  },
 };
 
 const sessionSlice = createSlice({
@@ -38,10 +43,38 @@ const sessionSlice = createSlice({
         error: action.payload,
       };
     },
+    editProfile: (state) => {
+      state.editProfileRequestStatus = {
+        success: false,
+        loading: true,
+        error: false,
+      };
+    },
+    editProfileSuccess: (state) => {
+      state.editProfileRequestStatus = {
+        success: true,
+        loading: false,
+        error: false,
+      };
+    },
+    editProfileFailure: (state, action) => {
+      state.editProfileRequestStatus = {
+        success: false,
+        loading: false,
+        error: action.payload,
+      };
+    },
   },
 });
 
-export const { login, loginSuccess, loginFailure } = sessionSlice.actions;
+export const {
+  login,
+  loginSuccess,
+  loginFailure,
+  editProfile,
+  editProfileSuccess,
+  editProfileFailure,
+} = sessionSlice.actions;
 
 export const sessionSelector = (state) => state.session;
 
@@ -57,6 +90,20 @@ export const loginRequest = (body) => {
       })
       .catch((error) => {
         dispatch(loginFailure(error));
+      });
+  };
+};
+
+export const editProfileRequest = (body) => {
+  return async (dispatch) => {
+    dispatch(editProfile(body));
+    services
+      .editProfile(body)
+      .then((response) => {
+        dispatch(editProfileSuccess(response));
+      })
+      .catch((error) => {
+        dispatch(editProfileFailure(error));
       });
   };
 };

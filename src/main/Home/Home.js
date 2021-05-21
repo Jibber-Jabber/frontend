@@ -4,6 +4,7 @@ import Post from "./Post/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { mainSelector, createPostRequest, getPostsRequest } from "../mainSlice";
 import { Button, TextField } from "@material-ui/core";
+import ProfileEditDialog from "../../session/UserProfile/ProfileEditDialog";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <div className={"left-section-container"}>
+        <ProfileEditDialog />
+      </div>
       <div className={"mid-section-container"}>
         <span className={"title"}>Home</span>
         <div className={"posts-create-and-list"}>
@@ -46,6 +50,7 @@ const Home = () => {
               multiline
               rows={4}
               onChange={handleInputChange}
+              required={true}
             />
             <Button
               className={"submit-btn"}
