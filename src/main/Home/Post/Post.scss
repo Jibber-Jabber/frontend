@@ -4,6 +4,15 @@
   display: flex;
   flex-direction: column;
 
+  &.MuiPaper-root {
+    background-color: #757575;
+    color: white;
+
+    .MuiTypography-colorTextSecondary {
+      color: #dadada;
+    }
+  }
+
   .header {
     margin-top: 10px;
   }
@@ -14,5 +23,9 @@
 
   .footer {
     margin-top: 10px;
+
+    .MuiIconButton-root {
+      color: #b1b1b1;
+    }
   }
 }

@@ -1,6 +1,6 @@
 html {
+  min-height: 100% !important;
   height: 100%;
-
 }
 
 body {
@@ -25,5 +25,4 @@ code {
 
 *:focus, *:focus-visible, *:active, *:visited, *:hover {
   outline: 0 none !important;
-  -webkit-box-shadow: none;
 }

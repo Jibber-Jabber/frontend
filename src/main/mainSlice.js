@@ -74,7 +74,7 @@ export const {
   createPostFailure,
 } = mainSlice.actions;
 
-export const appSelector = (state) => state.main;
+export const mainSelector = (state) => state.main;
 
 export default mainSlice.reducer;
 
@@ -99,6 +99,7 @@ export const createPostRequest = (body) => {
       .createPost(body)
       .then((response) => {
         dispatch(createPostSuccess(response));
+        dispatch(getPostsRequest());
       })
       .catch((error) => {
         dispatch(createPostFailure(error));

@@ -23,7 +23,6 @@ const sessionSlice = createSlice({
       };
     },
     loginSuccess: (state, action) => {
-      alert("Login Success");
       state.userInfo = action.payload;
       state.isLoggedIn = true;
       state.loginRequestStatus = {
