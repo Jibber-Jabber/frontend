@@ -1,13 +1,17 @@
-version: "2"
+version: "3"
 services:
-  node:
-    image: "node:10"
-    user: "node"
-    working_dir: /home/node/app
+  nginx-react:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
     environment:
-      - NODE_ENV=development
-    volumes:
-      - ./:/home/node/app
-    expose:
-      - "3000"
-    command: "npm start"
+      NODE_ENV: production
+    networks:
+      - jj-net
+
+networks:
+  jj-net:
+    driver: bridge
