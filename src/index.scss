@@ -1,5 +1,6 @@
 html {
   height: 100%;
+
 }
 
 body {
@@ -20,4 +21,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+*:focus, *:focus-visible, *:active, *:visited, *:hover {
+  outline: 0 none !important;
+  -webkit-box-shadow: none;
 }

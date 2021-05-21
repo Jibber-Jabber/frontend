@@ -1,0 +1,46 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    align-self: flex-start;
+    color: orange;
+    font-size: 30px;
+  }
+
+  .create-post-form {
+    display: flex;
+    flex-direction: column;
+
+    .text-field {
+      margin: 20px;
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active
+      {
+        -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
+        -webkit-text-fill-color: white !important;
+      }
+
+      .MuiInputLabel-outlined {
+        color: white;
+      }
+
+      .MuiOutlinedInput-root {
+        color: white;
+      }
+
+      .MuiOutlinedInput-notchedOutline {
+        border-color: white;
+      }
+    }
+  }
+
+  .posts-container {
+    width: 500px;
+  }
+}
+
