@@ -94,6 +94,15 @@ const Login = () => {
             Submit
           </Button>
         </form>
+        <div className={"redirect-to-signup-container"}>
+          Don't have an account yet?
+          <a
+            className={"redirect-to-signup-link"}
+            onClick={() => history.push("/signup")}
+          >
+            Sing Up
+          </a>
+        </div>
       </div>
     </div>
   );
