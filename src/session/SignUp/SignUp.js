@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import "./SignUp.scss";
 import * as http from "../../utils/http";
+import { useHistory } from "react-router-dom";
 
 const SignUp = () => {
   const initialValues = {
@@ -14,6 +15,8 @@ const SignUp = () => {
   };
 
   const [formValues, setFormValues] = useState(initialValues);
+
+  const history = useHistory();
 
   const formGroups = [
     {
@@ -86,6 +89,7 @@ const SignUp = () => {
     e.preventDefault();
     const { confirmPassword, ...formToSubmit } = formValues;
     await http.post("auth/register", formToSubmit);
+    history.push("/");
   };
 
   const handleInputChange = (e) => {
