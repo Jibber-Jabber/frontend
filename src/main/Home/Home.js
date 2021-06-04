@@ -24,6 +24,7 @@ const Home = () => {
   const [formValues, setFormValues] = useState(initialValues);
   const [usersOptions, setUsersOptions] = useState([]);
   const [selectedUser, setSelectedUser] = useState(undefined);
+  const [followedList, setFollowedList] = useState([]);
 
   const searchUserMutation = useMutation((username) => {
     return http.get(`users/searchUser?username=${username}`);
@@ -33,12 +34,32 @@ const Home = () => {
     return http.post(`users/followUser?userId=${userId}`);
   });
 
+  const unfollowUserMutation = useMutation((userId) => {
+    return http.post(`users/unfollowUser?userId=${userId}`);
+  });
+
   const logoutMutation = useMutation(() => {
     return http.post(`auth/logout`);
   });
 
+  const getFollowedListMutation = useMutation(() => {
+    return http.get(`users/followedUsers`);
+  });
+
+  const getFollowedList = () => {
+    getFollowedListMutation.mutate(
+      {},
+      {
+        onSuccess: (data) => {
+          setFollowedList(data);
+        },
+      }
+    );
+  };
+
   useEffect(() => {
     dispatch(getPostsRequest());
+    getFollowedList();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -68,7 +89,19 @@ const Home = () => {
   };
 
   const handleFollowUser = () => {
-    followUserMutation.mutate(selectedUser?.userId);
+    followUserMutation.mutate(selectedUser?.userId, {
+      onSuccess: () => {
+        getFollowedList();
+      },
+    });
+  };
+
+  const handleUnFollowUser = (userId) => {
+    unfollowUserMutation.mutate(userId, {
+      onSuccess: () => {
+        getFollowedList();
+      },
+    });
   };
 
   const handleLogout = () => {
@@ -156,16 +189,50 @@ const Home = () => {
                 {selectedUser?.username}
               </a>
             </div>
-            <Button
-              className={"follow-btn"}
-              variant="contained"
-              color="primary"
-              onClick={handleFollowUser}
-            >
-              Follow
-            </Button>
+            {!followedList.find(
+              (user) => user.userId === selectedUser?.userId
+            ) ? (
+              <Button
+                className={"follow-btn"}
+                variant="contained"
+                color="primary"
+                onClick={handleFollowUser}
+              >
+                Follow
+              </Button>
+            ) : (
+              <Button
+                className={"follow-btn"}
+                variant="contained"
+                color="primary"
+                onClick={() => handleUnFollowUser(selectedUser?.userId)}
+              >
+                UnFollow
+              </Button>
+            )}
           </div>
         )}
+        <div className={"followed-list"}>
+          <span>Followed List:</span>
+          {followedList?.map((userFollowed) => (
+            <div className={"followed-user-item"}>
+              <div>
+                {"User: "}
+                <a className={"user-selected"} onClick={handleViewUserProfile}>
+                  {userFollowed?.username}
+                </a>
+              </div>
+              <Button
+                className={"follow-btn"}
+                variant="contained"
+                color="primary"
+                onClick={() => handleUnFollowUser(userFollowed?.userId)}
+              >
+                UnFollow
+              </Button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

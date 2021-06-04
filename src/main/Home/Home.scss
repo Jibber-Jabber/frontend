@@ -79,6 +79,9 @@
   }
 
   .right-section-container {
+    display: flex;
+    flex-direction: column;
+
     .text-field {
       margin: 10px 5px 0 5px;
 
@@ -91,6 +94,7 @@
       padding: 10px 10px 0 20px;
       color: white;
       display: flex;
+      align-items: center;
 
       .user-selected {
         cursor: pointer;
@@ -101,6 +105,27 @@
 
         &.MuiButton-containedPrimary {
           background-color: orange;
+        }
+      }
+    }
+
+    .followed-list {
+      margin: 10px 0 0 10px;
+      color: white;
+      border: 1px solid white;
+      padding: 10px;
+
+      .followed-user-item {
+        display: flex;
+        margin-top: 10px;
+        align-items: center;
+
+        .follow-btn {
+          margin-left: 10px;
+
+          &.MuiButton-containedPrimary {
+            background-color: orange;
+          }
         }
       }
     }
