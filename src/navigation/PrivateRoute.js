@@ -8,9 +8,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={({ location, match }) =>
         isLoggedIn ? (
-          <Component />
+          <Component match={match} />
         ) : (
           <Redirect to={{ pathname: "/", state: { from: location } }} />
         )

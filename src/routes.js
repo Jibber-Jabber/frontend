@@ -5,6 +5,7 @@ import SignUp from "./session/SignUp/SignUp";
 import PrivateRoute from "./navigation/PrivateRoute";
 import Login from "./session/Login/Login";
 import { QueryClient, QueryClientProvider } from "react-query";
+import UserProfile from "./main/UserProfile/UserProfile";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,7 @@ const Routes = () => {
           <Route exact path={"/"} component={Login} />
           <Route exact path={"/signup"} component={SignUp} />
           <PrivateRoute path={"/home"} component={Home} />
-          <PrivateRoute path={"/profile/"} component={Home} />
+          <PrivateRoute path={"/profile/:userId?"} component={UserProfile} />
         </Switch>
       </Router>
     </QueryClientProvider>
