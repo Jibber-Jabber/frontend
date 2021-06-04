@@ -64,6 +64,9 @@ const sessionSlice = createSlice({
         error: action.payload,
       };
     },
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
   },
 });
 
@@ -74,6 +77,7 @@ export const {
   editProfile,
   editProfileSuccess,
   editProfileFailure,
+  setIsLoggedIn,
 } = sessionSlice.actions;
 
 export const sessionSelector = (state) => state.session;
