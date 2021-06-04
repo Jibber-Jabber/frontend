@@ -16,6 +16,7 @@ const Routes = () => {
           <Route exact path={"/"} component={Login} />
           <Route exact path={"/signup"} component={SignUp} />
           <PrivateRoute path={"/home"} component={Home} />
+          <PrivateRoute path={"/profile/"} component={Home} />
         </Switch>
       </Router>
     </QueryClientProvider>
