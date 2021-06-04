@@ -4,16 +4,21 @@ import Home from "./main/Home/Home";
 import SignUp from "./session/SignUp/SignUp";
 import PrivateRoute from "./navigation/PrivateRoute";
 import Login from "./session/Login/Login";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const Routes = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path={"/"} component={Login} />
-        <Route exact path={"/signup"} component={SignUp} />
-        <PrivateRoute path={"/home"} component={Home} />
-      </Switch>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Switch>
+          <Route exact path={"/"} component={Login} />
+          <Route exact path={"/signup"} component={SignUp} />
+          <PrivateRoute path={"/home"} component={Home} />
+        </Switch>
+      </Router>
+    </QueryClientProvider>
   );
 };
 

@@ -35,6 +35,7 @@ const mainSlice = createSlice({
       };
     },
     getPostsFailure: (state, action) => {
+      console.log(action.payload);
       state.getPostsRequestStatus = {
         success: false,
         loading: false,
@@ -87,7 +88,7 @@ export const getPostsRequest = () => {
         dispatch(getPostsSuccess(response));
       })
       .catch((error) => {
-        dispatch(getPostsFailure(error));
+        dispatch(getPostsFailure(error.data));
       });
   };
 };
@@ -102,7 +103,7 @@ export const createPostRequest = (body) => {
         dispatch(getPostsRequest());
       })
       .catch((error) => {
-        dispatch(createPostFailure(error));
+        dispatch(createPostFailure(error.data));
       });
   };
 };

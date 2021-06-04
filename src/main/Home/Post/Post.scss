@@ -23,9 +23,15 @@
 
   .footer {
     margin-top: 10px;
+    width: 100%;
 
     .MuiIconButton-root {
       color: #b1b1b1;
+    }
+
+    .delete-post-btn {
+      margin-left: auto;
+      margin-right: 20px;
     }
   }
 }
