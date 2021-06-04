@@ -9,10 +9,13 @@ import ProfileEditDialog from "../../session/UserProfile/ProfileEditDialog";
 import { Autocomplete } from "@material-ui/lab";
 import { useMutation } from "react-query";
 import * as http from "../../utils/http";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { postsList } = useSelector(mainSelector);
+
+  const history = useHistory();
 
   const initialValues = {
     content: "",
@@ -79,6 +82,10 @@ const Home = () => {
     );
   };
 
+  const handleViewUserProfile = () => {
+    history.push(`/profile/${selectedUser?.userId}`);
+  };
+
   return (
     <div className="home-container">
       <div className={"left-section-container"}>
@@ -143,7 +150,12 @@ const Home = () => {
         />
         {selectedUser && (
           <div className={"selected-user-to-follow"}>
-            <span>{"User: " + selectedUser?.username}</span>
+            <div>
+              {"User: "}
+              <a className={"user-selected"} onClick={handleViewUserProfile}>
+                {selectedUser?.username}
+              </a>
+            </div>
             <Button
               className={"follow-btn"}
               variant="contained"

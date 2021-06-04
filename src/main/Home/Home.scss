@@ -90,6 +90,11 @@
     .selected-user-to-follow {
       padding: 10px 10px 0 20px;
       color: white;
+      display: flex;
+
+      .user-selected {
+        cursor: pointer;
+      }
 
       .follow-btn {
         margin-left: 10px;
