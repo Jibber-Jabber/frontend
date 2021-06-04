@@ -2,9 +2,41 @@
   display: flex;
   margin-left: 20%;
 
+  .text-field {
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active
+    {
+      -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
+      -webkit-text-fill-color: white !important;
+    }
+
+    .MuiInputLabel-outlined {
+      color: white;
+    }
+
+    .MuiOutlinedInput-root {
+      color: white;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border-color: white;
+    }
+
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+      border-color: orange;
+    }
+  }
+
   .left-section-container {
     padding: 20px;
     align-self: flex-start;
+
+    .logout-btn {
+      margin-bottom: 10px;
+    }
   }
 
   .mid-section-container {
@@ -29,27 +61,6 @@
 
         .text-field {
           margin: 20px;
-
-          input:-webkit-autofill,
-          input:-webkit-autofill:hover,
-          input:-webkit-autofill:focus,
-          input:-webkit-autofill:active
-          {
-            -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
-            -webkit-text-fill-color: white !important;
-          }
-
-          .MuiInputLabel-outlined {
-            color: white;
-          }
-
-          .MuiOutlinedInput-root {
-            color: white;
-          }
-
-          .MuiOutlinedInput-notchedOutline {
-            border-color: white;
-          }
         }
 
         .submit-btn {
@@ -63,6 +74,29 @@
 
       .posts-container {
         padding-bottom: 20px;
+      }
+    }
+  }
+
+  .right-section-container {
+    .text-field {
+      margin: 10px 5px 0 5px;
+
+      .MuiIconButton-root {
+        color: white;
+      }
+    }
+
+    .selected-user-to-follow {
+      padding: 10px 10px 0 20px;
+      color: white;
+
+      .follow-btn {
+        margin-left: 10px;
+
+        &.MuiButton-containedPrimary {
+          background-color: orange;
+        }
       }
     }
   }

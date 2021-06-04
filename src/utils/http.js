@@ -20,3 +20,5 @@ export const post = (url, body) => request(url, "POST", body);
 export const put = (url, body) => request(url, "PUT", body);
 
 export const patch = (url, body) => request(url, "PATCH", body);
+
+export const deleteReq = (url) => request(url, "DELETE");

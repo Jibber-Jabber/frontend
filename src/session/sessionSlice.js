@@ -89,7 +89,7 @@ export const loginRequest = (body) => {
         dispatch(loginSuccess(response));
       })
       .catch((error) => {
-        dispatch(loginFailure(error));
+        dispatch(loginFailure(error.data));
       });
   };
 };
@@ -103,7 +103,7 @@ export const editProfileRequest = (body) => {
         dispatch(editProfileSuccess(response));
       })
       .catch((error) => {
-        dispatch(editProfileFailure(error));
+        dispatch(editProfileFailure(error.data));
       });
   };
 };
