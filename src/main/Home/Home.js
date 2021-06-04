@@ -3,6 +3,7 @@ import "./Home.scss";
 import Post from "./Post/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { mainSelector, createPostRequest, getPostsRequest } from "../mainSlice";
+import { setIsLoggedIn } from "../../session/sessionSlice";
 import { Button, TextField } from "@material-ui/core";
 import ProfileEditDialog from "../../session/UserProfile/ProfileEditDialog";
 import { Autocomplete } from "@material-ui/lab";
@@ -68,7 +69,14 @@ const Home = () => {
   };
 
   const handleLogout = () => {
-    logoutMutation.mutate();
+    logoutMutation.mutate(
+      {},
+      {
+        onSuccess: () => {
+          dispatch(setIsLoggedIn(false));
+        },
+      }
+    );
   };
 
   return (
