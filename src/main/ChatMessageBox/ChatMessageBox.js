@@ -20,7 +20,9 @@ const ChatMessageBox = () => {
     setMessages([...messages, msg]);
   };
 
-  return (
+    const wsSourceUrl = window.location.protocol + "//" + window.location.host + "/chat";
+
+    return (
     <div>
       <TalkBox
         topic="react-websocket-template"
@@ -31,7 +33,7 @@ const ChatMessageBox = () => {
         connected={clientConnected}
       />
       <SockJsClient
-        url={"http://localhost:8080/chat"}
+        url={wsSourceUrl}
         topics={["/topic/all"]}
         onMessage={onMessageReceive}
         ref={(client) => {
