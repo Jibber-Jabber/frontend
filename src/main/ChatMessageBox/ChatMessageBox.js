@@ -10,6 +10,7 @@ const ChatMessageBox = () => {
   const sendMessage = (msg, selfMsg) => {
     try {
       clientRef.sendMessage("/app/all", JSON.stringify(selfMsg));
+      console.log(selfMsg)
       return true;
     } catch (e) {
       return false;
