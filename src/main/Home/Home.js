@@ -25,6 +25,7 @@ const Home = () => {
   const [formValues, setFormValues] = useState(initialValues);
   const [usersOptions, setUsersOptions] = useState([]);
   const [selectedUser, setSelectedUser] = useState(undefined);
+  const [selectedChatUser, setSelectedChatUser] = useState(undefined);
   const [followedList, setFollowedList] = useState([]);
 
   const searchUserMutation = useMutation((username) => {
@@ -171,7 +172,10 @@ const Home = () => {
           options={usersOptions}
           getOptionLabel={(option) => option.username}
           style={{ width: 300 }}
-          onChange={(event, selectedValue) => setSelectedUser(selectedValue)}
+          onChange={(event, selectedValue) => {
+            setSelectedUser(selectedValue);
+            setSelectedChatUser(selectedValue);
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -235,7 +239,7 @@ const Home = () => {
           ))}
         </div>
         <div>
-          <ChatMessageBox />
+          <ChatMessageBox selectedChatUser={selectedChatUser} />
         </div>
       </div>
     </div>
