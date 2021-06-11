@@ -6,6 +6,7 @@ import { mainSelector, createPostRequest, getPostsRequest } from "../mainSlice";
 import { setIsLoggedIn } from "../../session/sessionSlice";
 import { Button, TextField } from "@material-ui/core";
 import ProfileEditDialog from "../../session/UserProfile/ProfileEditDialog";
+import ChatMessageBox from "../ChatMessageBox/ChatMessageBox";
 import { Autocomplete } from "@material-ui/lab";
 import { useMutation } from "react-query";
 import * as http from "../../utils/http";
@@ -232,6 +233,9 @@ const Home = () => {
               </Button>
             </div>
           ))}
+        </div>
+        <div>
+          <ChatMessageBox />
         </div>
       </div>
     </div>
