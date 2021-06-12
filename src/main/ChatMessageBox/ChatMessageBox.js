@@ -3,6 +3,8 @@ import SockJsClient from "react-stomp";
 import { TalkBox } from "react-talk";
 import { useSelector } from "react-redux";
 import { sessionSelector } from "../../session/sessionSlice";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const ChatMessageBox = ({ selectedChatUser }) => {
   const [clientConnected, setClientConnected] = useState(false);
@@ -10,20 +12,28 @@ const ChatMessageBox = ({ selectedChatUser }) => {
   let clientRef = useRef(undefined);
   const { userInfo } = useSelector(sessionSelector);
 
+  const getChatMessage = useMutation((userId) =>
+    axios.get(`/api/messages/${userId}`)
+  );
+
   const sendMessage = (msg, selfMsg) => {
     try {
       const messageToSend = {
-        message: selfMsg.message,
-        author: userInfo.username,
-        receiver: selectedChatUser
-          ? selectedChatUser.username
-          : userInfo.username,
+        senderId: userInfo.userId,
+        recipientId: selectedChatUser.userId,
+        senderName: userInfo.username,
+        recipientName: selectedChatUser.username,
+        content: selfMsg.message,
+        timestamp: new Date(),
       };
-      clientRef.sendMessage(
-        "/app/sendPrivateMessage",
-        JSON.stringify(messageToSend)
-      );
-      console.log(selfMsg);
+      clientRef.sendMessage("/app/chat", JSON.stringify(messageToSend));
+
+      const messageSend = {
+        author: userInfo.username,
+        authorId: userInfo.userId,
+        message: selfMsg.message,
+      };
+      setMessages([...messages, messageSend]);
       return true;
     } catch (e) {
       return false;
@@ -31,16 +41,34 @@ const ChatMessageBox = ({ selectedChatUser }) => {
   };
 
   const onMessageReceive = (msg, topic) => {
-    setMessages([...messages, msg]);
+    if (selectedChatUser?.userId === msg.senderId) {
+      getChatMessage.mutate(msg.id, {
+        onSuccess: (res) => {
+          const data = res.data;
+          console.log(data);
+          const receivedMessage = {
+            author: data.senderName,
+            authorId: data.senderId,
+            message: data.content,
+          };
+          console.log(receivedMessage);
+          setMessages([...messages, receivedMessage]);
+        },
+      });
+    }
   };
 
   const wsSourceUrl =
-    window.location.protocol + "//" + window.location.host + "/chat";
+    window.location.protocol + "//" + window.location.host + "/ws";
 
   return (
     <div>
       <TalkBox
-        topic="react-websocket-template"
+        topic={
+          selectedChatUser
+            ? `Private Chat with ${selectedChatUser?.username}`
+            : "Private Chat"
+        }
         currentUserId={userInfo.username}
         currentUser={userInfo.username}
         messages={messages}
@@ -49,11 +77,7 @@ const ChatMessageBox = ({ selectedChatUser }) => {
       />
       <SockJsClient
         url={wsSourceUrl}
-        topics={[
-          `/user/${
-            selectedChatUser ? selectedChatUser.username : userInfo.username
-          }/reply`,
-        ]}
+        topics={[`/user/${userInfo.userId}/queue/messages`]}
         onMessage={onMessageReceive}
         ref={(client) => {
           clientRef = client;
