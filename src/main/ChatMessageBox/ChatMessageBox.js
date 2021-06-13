@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SockJsClient from "react-stomp";
 import { TalkBox } from "react-talk";
 import { useSelector } from "react-redux";
 import { sessionSelector } from "../../session/sessionSlice";
 import { useMutation } from "react-query";
-import axios from "axios";
+import * as http from "../../utils/http";
 
 const ChatMessageBox = ({ selectedChatUser }) => {
   const [clientConnected, setClientConnected] = useState(false);
@@ -12,9 +12,39 @@ const ChatMessageBox = ({ selectedChatUser }) => {
   let clientRef = useRef(undefined);
   const { userInfo } = useSelector(sessionSelector);
 
-  const getChatMessage = useMutation((userId) =>
-    axios.get(`/api/messages/${userId}`)
+  const getChatMessage = useMutation((messageId) =>
+    http.get(`/messages/${messageId}`)
   );
+
+  const getChatMessagesMutation = useMutation((chatInfo) =>
+    http.get(`/messages/${chatInfo.senderId}/${chatInfo.recipientId}`)
+  );
+
+  useEffect(() => {
+    getChatMessages();
+  }, [selectedChatUser]);
+
+  const parseMessage = (message) => {
+    return {
+      author: message.senderName,
+      authorId: message.senderId,
+      message: message.content,
+    };
+  };
+
+  const getChatMessages = () => {
+    const chatInfo = {
+      senderId: userInfo.userId,
+      recipientId: selectedChatUser.userId,
+    };
+    getChatMessagesMutation.mutate(chatInfo, {
+      onSuccess: (data) => {
+        console.log(data);
+        const messageList = data.map((message) => parseMessage(message));
+        setMessages(messageList);
+      },
+    });
+  };
 
   const sendMessage = (msg, selfMsg) => {
     try {
@@ -43,9 +73,7 @@ const ChatMessageBox = ({ selectedChatUser }) => {
   const onMessageReceive = (msg, topic) => {
     if (selectedChatUser?.userId === msg.senderId) {
       getChatMessage.mutate(msg.id, {
-        onSuccess: (res) => {
-          const data = res.data;
-          console.log(data);
+        onSuccess: (data) => {
           const receivedMessage = {
             author: data.senderName,
             authorId: data.senderId,

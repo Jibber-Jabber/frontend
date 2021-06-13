@@ -3,7 +3,7 @@ import "./Home.scss";
 import Post from "./Post/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { mainSelector, createPostRequest, getPostsRequest } from "../mainSlice";
-import { setIsLoggedIn } from "../../session/sessionSlice";
+import { sessionSelector, setIsLoggedIn } from "../../session/sessionSlice";
 import { Button, TextField } from "@material-ui/core";
 import ProfileEditDialog from "../../session/UserProfile/ProfileEditDialog";
 import ChatMessageBox from "../ChatMessageBox/ChatMessageBox";
@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 const Home = () => {
   const dispatch = useDispatch();
   const { postsList } = useSelector(mainSelector);
+  const { userInfo } = useSelector(sessionSelector);
 
   const history = useHistory();
 
@@ -47,6 +48,10 @@ const Home = () => {
   const getFollowedListMutation = useMutation(() => {
     return http.get(`users/followedUsers`);
   });
+
+  const getNewMessagesCountMutation = useMutation((chatInfo) =>
+    http.get(`/messages/${chatInfo.senderId}/${chatInfo.recipientId}/count`)
+  );
 
   const getFollowedList = () => {
     getFollowedListMutation.mutate(
@@ -121,6 +126,16 @@ const Home = () => {
     history.push(`/profile/${selectedUser?.userId}`);
   };
 
+  const getNewMessages = (recipient) => {
+    const chatInfo = {
+      senderId: userInfo.userId,
+      recipientId: recipient.userId,
+    };
+    getNewMessagesCountMutation.mutate(chatInfo, {
+      onSuccess: (data) => {},
+    });
+  };
+
   return (
     <div className="home-container">
       <div className={"left-section-container"}>
@@ -172,10 +187,7 @@ const Home = () => {
           options={usersOptions}
           getOptionLabel={(option) => option.username}
           style={{ width: 300 }}
-          onChange={(event, selectedValue) => {
-            setSelectedUser(selectedValue);
-            setSelectedChatUser(selectedValue);
-          }}
+          onChange={(event, selectedValue) => setSelectedUser(selectedValue)}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -235,11 +247,21 @@ const Home = () => {
               >
                 UnFollow
               </Button>
+              <Button
+                className={"follow-btn"}
+                variant="contained"
+                color="primary"
+                onClick={() => setSelectedChatUser(userFollowed)}
+              >
+                Chat
+              </Button>
             </div>
           ))}
         </div>
-        <div>
-          <ChatMessageBox selectedChatUser={selectedChatUser} />
+        <div className={"chat-box"}>
+          {selectedChatUser && (
+            <ChatMessageBox selectedChatUser={selectedChatUser} />
+          )}
         </div>
       </div>
     </div>

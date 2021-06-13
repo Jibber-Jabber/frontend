@@ -41,7 +41,7 @@
 
   .mid-section-container {
     width: 50%;
-    min-height: 100vh;
+    min-height: 98vh;
     padding: 20px 20px 0 20px;
     border-left: 1px white solid;
     border-right: 1px white solid;
@@ -81,6 +81,10 @@
   .right-section-container {
     display: flex;
     flex-direction: column;
+
+    .chat-box {
+      margin-top: auto;
+    }
 
     .text-field {
       margin: 10px 5px 0 5px;
