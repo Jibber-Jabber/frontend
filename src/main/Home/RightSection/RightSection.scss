@@ -1,0 +1,94 @@
+.right-section-container {
+  display: flex;
+  flex-direction: column;
+
+  .chat-box {
+    margin-top: auto;
+  }
+
+  .text-field {
+    margin: 10px 5px 0 5px;
+
+    .MuiIconButton-root {
+      color: white;
+    }
+  }
+
+  .selected-user-to-follow {
+    padding: 10px 10px 0 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+
+    .user-selected {
+      cursor: pointer;
+    }
+
+    .follow-btn {
+      margin-left: 10px;
+
+      &.MuiButton-containedPrimary {
+        background-color: orange;
+      }
+    }
+  }
+
+  .followed-list {
+    margin: 10px 0 0 10px;
+    color: white;
+    border: 1px solid white;
+    padding: 10px;
+
+    .followed-user-item {
+      display: flex;
+      margin-top: 10px;
+      align-items: center;
+
+      .follow-btn {
+        margin-left: 10px;
+
+        &.MuiButton-containedPrimary {
+          background-color: orange;
+        }
+      }
+    }
+  }
+
+  .my-chats-list {
+    color: white;
+    padding: 10px;
+    margin: 10px 0 0 10px;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+
+    .chat-list-item {
+      display: flex;
+      margin-top: 10px;
+      align-items: center;
+
+      .show-chat-btn {
+        margin-left: auto;
+
+        &.MuiButton-containedPrimary {
+          background-color: orange;
+        }
+      }
+
+      .unread-count {
+        margin-left: 10px;
+        background-color: red;
+        border-radius: 50px;
+        padding: 10px;
+      }
+    }
+  }
+
+  .show-chat-btn {
+    margin-left: 10px;
+
+    &.MuiButton-containedPrimary {
+      background-color: orange;
+    }
+  }
+}
