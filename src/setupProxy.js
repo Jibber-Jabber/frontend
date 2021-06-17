@@ -22,14 +22,14 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
-    app.use(
-        "/api",
-        createProxyMiddleware({
-            target: "http://localhost:8082",
-            changeOrigin: true,
-        })
-    );
-    app.use(
-        createProxyMiddleware("/ws", { target: "http://localhost:8082", ws: true })
-    );
+  app.use(
+    "/api",
+    createProxyMiddleware({
+      target: "http://localhost:8082",
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    createProxyMiddleware("/ws", { target: "http://localhost:8082", ws: true })
+  );
 };
