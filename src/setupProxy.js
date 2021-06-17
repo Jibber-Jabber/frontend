@@ -23,13 +23,13 @@ module.exports = function (app) {
     })
   );
   app.use(
-    "/api",
+    "/api/api",
     createProxyMiddleware({
       target: "http://localhost:8082",
       changeOrigin: true,
     })
   );
   app.use(
-    createProxyMiddleware("/ws", { target: "http://localhost:8082", ws: true })
+    createProxyMiddleware("/api/ws", { target: "http://localhost:8082", ws: true })
   );
 };
