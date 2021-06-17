@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Button, Dialog, DialogTitle, TextField } from "@material-ui/core";
 import "./ProfileEditDialog.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { editProfileRequest, sessionSelector } from "../sessionSlice";
+import { sessionSelector, setUserInfo } from "../sessionSlice";
+import { useMutation } from "react-query";
+import * as http from "../../utils/http";
+import { useAlert } from "react-alert";
 
 const ProfileEditDialog = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const { userInfo } = useSelector(sessionSelector);
 
@@ -26,6 +30,7 @@ const ProfileEditDialog = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setFormValues(initialValues);
   };
 
   const formGroups = [
@@ -58,6 +63,7 @@ const ProfileEditDialog = () => {
           type: "text",
           value: formValues.username,
           required: false,
+          disabled: true,
         },
         {
           name: "email",
@@ -91,12 +97,21 @@ const ProfileEditDialog = () => {
     },
   ];
 
+  const editProfileMutation = useMutation((body) => {
+    return http.put(`users/editProfile`, body);
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { newPassword, ...formToSubmit } = formValues;
-    dispatch(
-      editProfileRequest(newPassword === "" ? formToSubmit : formValues)
-    );
+    editProfileMutation.mutate(newPassword === "" ? formToSubmit : formValues, {
+      onSuccess: (data) => {
+        dispatch(setUserInfo(data));
+      },
+      onError: (error) => {
+        alert.error(error.data.message);
+      },
+    });
   };
 
   const handleInputChange = (e) => {
@@ -142,6 +157,7 @@ const ProfileEditDialog = () => {
                     required={field.required}
                     error={field.error}
                     helperText={field.errorMessage}
+                    disabled={field?.disabled}
                   />
                 ))}
               </div>

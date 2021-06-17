@@ -109,7 +109,9 @@ const RightSection = () => {
       <Autocomplete
         id="combo-box"
         options={usersOptions}
-        getOptionLabel={(option) => option.username}
+        getOptionLabel={(option) =>
+          option.firstName + " " + option.lastName + " \n@" + option.username
+        }
         style={{ width: 300 }}
         onChange={(event, selectedValue) => setSelectedUser(selectedValue)}
         renderInput={(params) => (
@@ -216,6 +218,7 @@ const RightSection = () => {
         <ChatMessageBox
           selectedChatUser={selectedChatUser}
           updateMyChats={updateMyChats}
+          setSelectedChatUser={setSelectedChatUser}
         />
       </div>
     </div>

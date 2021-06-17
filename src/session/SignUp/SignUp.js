@@ -3,8 +3,12 @@ import { Button, TextField } from "@material-ui/core";
 import "./SignUp.scss";
 import * as http from "../../utils/http";
 import { useHistory } from "react-router-dom";
+import { useMutation } from "react-query";
+import { useAlert } from "react-alert";
 
 const SignUp = () => {
+  const alert = useAlert();
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -85,11 +89,22 @@ const SignUp = () => {
     },
   ];
 
+  const registerMutation = useMutation((body) => {
+    return http.post(`auth/register`, body);
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...formToSubmit } = formValues;
-    await http.post("auth/register", formToSubmit);
-    history.push("/");
+    registerMutation.mutate(formToSubmit, {
+      onSuccess: () => {
+        history.push("/");
+        alert.success("SIGNUP SUCCESSFULLY");
+      },
+      onError: (error) => {
+        alert.error(error.data.message);
+      },
+    });
   };
 
   const handleInputChange = (e) => {

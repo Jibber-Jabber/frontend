@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import ProfileEditDialog from "../../../session/UserProfile/ProfileEditDialog";
+import ProfileEditDialog from "../../../session/ProfileEditDialog/ProfileEditDialog";
 import { sessionSelector, setIsLoggedIn } from "../../../session/sessionSlice";
 import { useMutation } from "react-query";
 import * as http from "../../../utils/http";

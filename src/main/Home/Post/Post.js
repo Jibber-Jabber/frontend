@@ -13,10 +13,13 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import { DeleteOutline, Favorite } from "@material-ui/icons";
 import { useMutation } from "react-query";
 import * as http from "../../../utils/http";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sessionSelector } from "../../../session/sessionSlice";
+import { setPostsList } from "../../mainSlice";
 
 const Post = ({ post }) => {
+  const dispatch = useDispatch();
+
   const deletePostMutation = useMutation(() => {
     return http.deleteReq(`posts/${post.postId}`);
   });
@@ -29,15 +32,24 @@ const Post = ({ post }) => {
     return http.post(`posts/unlike/${post.postId}`);
   });
 
-  const getPosts = useMutation(() => http.get(`posts`));
-
   const { userInfo } = useSelector(sessionSelector);
+
+  const getPostsMutation = useMutation(() => http.get(`posts`));
+
+  const getPosts = () => {
+    getPostsMutation.mutate(
+      {},
+      {
+        onSuccess: (data) => dispatch(setPostsList(data)),
+      }
+    );
+  };
 
   const handleDelete = async () => {
     deletePostMutation.mutate(
       {},
       {
-        onSuccess: () => window.location.reload(),
+        onSuccess: () => getPosts(),
       }
     );
   };
@@ -46,7 +58,13 @@ const Post = ({ post }) => {
     likePostMutation.mutate(
       {},
       {
-        onSuccess: () => window.location.reload(),
+        onSuccess: () =>
+          getPostsMutation.mutate(
+            {},
+            {
+              onSuccess: (data) => dispatch(setPostsList(data)),
+            }
+          ),
       }
     );
   };
@@ -55,7 +73,13 @@ const Post = ({ post }) => {
     unlikePostMutation.mutate(
       {},
       {
-        onSuccess: () => window.location.reload(),
+        onSuccess: () =>
+          getPostsMutation.mutate(
+            {},
+            {
+              onSuccess: (data) => dispatch(setPostsList(data)),
+            }
+          ),
       }
     );
   };

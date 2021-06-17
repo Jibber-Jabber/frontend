@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import "./Login.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { loginRequest, sessionSelector } from "../sessionSlice";
+import { sessionSelector, setIsLoggedIn, setUserInfo } from "../sessionSlice";
 import { useHistory } from "react-router-dom";
+import { useMutation } from "react-query";
+import * as http from "../../utils/http";
+import { useAlert } from "react-alert";
 
 const Login = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector(sessionSelector);
 
@@ -47,9 +51,22 @@ const Login = () => {
     },
   ];
 
+  const loginMutation = useMutation((body) => {
+    return http.post(`auth/login`, body);
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginRequest(formValues));
+    loginMutation.mutate(formValues, {
+      onSuccess: (data) => {
+        alert.success("LOGIN SUCCESSFULLY");
+        dispatch(setUserInfo(data));
+        dispatch(setIsLoggedIn(true));
+      },
+      onError: (error) => {
+        alert.error(error.data.message);
+      },
+    });
   };
 
   const handleInputChange = (e) => {

@@ -5,8 +5,14 @@ import { useSelector } from "react-redux";
 import { sessionSelector } from "../../session/sessionSlice";
 import { useMutation } from "react-query";
 import * as http from "../../utils/http";
+import CloseIcon from "@material-ui/icons/Close";
+import "./ChatMessageBox.scss";
 
-const ChatMessageBox = ({ selectedChatUser, updateMyChats }) => {
+const ChatMessageBox = ({
+  selectedChatUser,
+  updateMyChats,
+  setSelectedChatUser,
+}) => {
   const [clientConnected, setClientConnected] = useState(false);
   const [messages, setMessages] = useState([]);
   let clientRef = useRef(undefined);
@@ -49,7 +55,6 @@ const ChatMessageBox = ({ selectedChatUser, updateMyChats }) => {
     };
     getChatMessagesMutation.mutate(chatInfo, {
       onSuccess: (data) => {
-        console.log(data);
         const messageList = data.map((message) => parseMessage(message));
         setMessages(messageList);
       },
@@ -94,18 +99,24 @@ const ChatMessageBox = ({ selectedChatUser, updateMyChats }) => {
   return (
     <div>
       {selectedChatUser && (
-        <TalkBox
-          topic={
-            selectedChatUser
-              ? `Private Chat with ${selectedChatUser?.userName}`
-              : "Private Chat"
-          }
-          currentUserId={userInfo.username}
-          currentUser={userInfo.username}
-          messages={messages}
-          onSendMessage={sendMessage}
-          connected={clientConnected}
-        />
+        <div className={"chat-box-container"}>
+          <CloseIcon
+            className={"chat-close-icon"}
+            onClick={() => setSelectedChatUser(undefined)}
+          />
+          <TalkBox
+            topic={
+              selectedChatUser
+                ? `Private Chat with ${selectedChatUser?.userName}`
+                : "Private Chat"
+            }
+            currentUserId={userInfo.username}
+            currentUser={userInfo.username}
+            messages={messages}
+            onSendMessage={sendMessage}
+            connected={clientConnected}
+          />
+        </div>
       )}
       <SockJsClient
         url={wsSourceUrl}

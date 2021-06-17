@@ -29,46 +29,5 @@
       border-color: orange;
     }
   }
-
-  .mid-section-container {
-    width: 50%;
-    min-height: 98vh;
-    padding: 20px 20px 0 20px;
-    border-left: 1px white solid;
-    border-right: 1px white solid;
-
-    .title {
-      align-self: flex-start;
-      color: orange;
-      font-size: 30px;
-      margin-top: 30px;
-    }
-
-    .posts-create-and-list {
-
-      .create-post-form {
-        display: flex;
-        flex-direction: column;
-
-        .text-field {
-          margin: 20px;
-        }
-
-        .submit-btn {
-          margin-top: 20px;
-
-          &.MuiButton-containedPrimary {
-            background-color: orange;
-          }
-        }
-      }
-
-      .posts-container {
-        padding-bottom: 20px;
-      }
-    }
-  }
-
-
 }
 
