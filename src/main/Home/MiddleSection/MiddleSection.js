@@ -56,7 +56,7 @@ const MiddleSection = () => {
 
   return (
     <div className={"mid-section-container"}>
-      <span className={"title"}>Home</span>
+      <span className={"title"}>Home Prod entrega TP2</span>
       <div className={"posts-create-and-list"}>
         <form className={"create-post-form"} onSubmit={handleSubmit}>
           <TextField
