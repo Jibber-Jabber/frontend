@@ -88,7 +88,7 @@ const Post = ({ post }) => {
     <Card className={"post-container"}>
       <CardHeader
         className={"header"}
-        title={"User: " + post.user.username}
+        title={"@" + post.user.username}
         subheader={moment(post.creationDate)
           .utcOffset("-06:00")
           .format("YYYY-MM-DD HH:mm")}
@@ -105,10 +105,6 @@ const Post = ({ post }) => {
           )}
         </IconButton>
         <span>{post.likeCount}</span>
-        <IconButton>
-          <ChatBubbleOutlineIcon />
-        </IconButton>
-        <span>{post.commentCount}</span>
         {post.user.username === userInfo?.username && (
           <IconButton className={"delete-post-btn"} onClick={handleDelete}>
             <DeleteOutline />

@@ -126,93 +126,105 @@ const RightSection = () => {
       />
       {selectedUser && (
         <div className={"selected-user-to-follow"}>
+          <span>User:</span>
           <div>
-            {"User: "}
             <a
               className={"user-selected"}
               onClick={() => handleViewUserProfile(selectedUser?.userId)}
             >
-              {selectedUser?.username}
+              {"@" + selectedUser?.username}
             </a>
-          </div>
-          {!followedList.find(
-            (user) => user.userId === selectedUser?.userId
-          ) ? (
-            <Button
-              className={"follow-btn"}
-              variant="contained"
-              color="primary"
-              onClick={handleFollowUser}
-            >
-              Follow
-            </Button>
-          ) : (
-            <Button
-              className={"follow-btn"}
-              variant="contained"
-              color="primary"
-              onClick={() => handleUnFollowUser(selectedUser?.userId)}
-            >
-              UnFollow
-            </Button>
-          )}
-          <Button
-            className={"show-chat-btn"}
-            variant="contained"
-            color="primary"
-            onClick={() =>
-              setSelectedChatUser({
-                userId: selectedUser.userId,
-                userName: selectedUser.username,
-              })
-            }
-          >
-            Chat
-          </Button>
-        </div>
-      )}
-      <div className={"followed-list"}>
-        <span>Followed List:</span>
-        {followedList?.map((userFollowed) => (
-          <div className={"followed-user-item"}>
-            <div>
-              {"User: "}
-              <a
-                className={"user-selected"}
-                onClick={() => handleViewUserProfile(userFollowed?.userId)}
+            {!followedList.find(
+              (user) => user.userId === selectedUser?.userId
+            ) ? (
+              <Button
+                className={"follow-btn"}
+                variant="contained"
+                color="primary"
+                onClick={handleFollowUser}
               >
-                {userFollowed?.username}
-              </a>
-            </div>
-            <Button
-              className={"follow-btn"}
-              variant="contained"
-              color="primary"
-              onClick={() => handleUnFollowUser(userFollowed?.userId)}
-            >
-              UnFollow
-            </Button>
-          </div>
-        ))}
-      </div>
-      <div className={"my-chats-list"}>
-        <span>Active Chats:</span>
-        {myChatsList.map((chatInfo) => (
-          <div className={"chat-list-item"}>
-            <span className={"chat-list-username"}>{chatInfo.userName}</span>
+                Follow
+              </Button>
+            ) : (
+              <Button
+                className={"follow-btn"}
+                variant="contained"
+                color="primary"
+                onClick={() => handleUnFollowUser(selectedUser?.userId)}
+              >
+                UnFollow
+              </Button>
+            )}
             <Button
               className={"show-chat-btn"}
               variant="contained"
               color="primary"
-              onClick={() => setSelectedChatUser(chatInfo)}
+              onClick={() =>
+                setSelectedChatUser({
+                  userId: selectedUser.userId,
+                  userName: selectedUser.username,
+                })
+              }
             >
               Chat
             </Button>
-            {chatInfo.unreadCount > 0 && (
-              <span className={"unread-count"}>{chatInfo.unreadCount}</span>
-            )}
           </div>
-        ))}
+        </div>
+      )}
+      <div className={"followed-list"}>
+        <span>Followed List:</span>
+        {followedList.length > 0 ? (
+          followedList?.map((userFollowed) => (
+            <div className={"followed-user-item"}>
+              <div>
+                {"User: "}
+                <a
+                  className={"user-selected"}
+                  onClick={() => handleViewUserProfile(userFollowed?.userId)}
+                >
+                  {userFollowed?.username}
+                </a>
+              </div>
+              <Button
+                className={"follow-btn"}
+                variant="contained"
+                color="primary"
+                onClick={() => handleUnFollowUser(userFollowed?.userId)}
+              >
+                UnFollow
+              </Button>
+            </div>
+          ))
+        ) : (
+          <span className={"not-followed-message"}>
+            You don't follow anyone yet
+          </span>
+        )}
+      </div>
+      <div className={"my-chats-list"}>
+        <span>Active Chats:</span>
+        {myChatsList.length > 0 ? (
+          myChatsList.map((chatInfo) => (
+            <div className={"chat-list-item"}>
+              <span className={"chat-list-username"}>{chatInfo.userName}</span>
+              <Button
+                className={"show-chat-btn"}
+                variant="contained"
+                color="primary"
+                onClick={() => setSelectedChatUser(chatInfo)}
+              >
+                Chat
+              </Button>
+              {chatInfo.unreadCount > 0 && (
+                <span className={"unread-count"}>{chatInfo.unreadCount}</span>
+              )}
+            </div>
+          ))
+        ) : (
+          <span className={"not-chats-message"}>
+            You don't have any chat yet
+          </span>
+        )}
       </div>
       <div className={"chat-box"}>
         <ChatMessageBox

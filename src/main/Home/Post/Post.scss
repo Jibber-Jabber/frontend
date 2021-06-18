@@ -5,8 +5,9 @@
   flex-direction: column;
 
   &.MuiPaper-root {
-    background-color: #757575;
+    background-color: #636363;
     color: white;
+    box-shadow: 0 0 3px 1px white;
 
     .MuiTypography-colorTextSecondary {
       color: #dadada;
@@ -15,6 +16,14 @@
 
   .header {
     margin-top: 10px;
+
+    .MuiCardHeader-title {
+      font-size: 20px;
+    }
+
+    .MuiCardHeader-subheader {
+      font-size: 12px;
+    }
   }
 
   .content {
