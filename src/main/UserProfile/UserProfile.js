@@ -39,18 +39,18 @@ const UserProfile = ({ match }) => {
 
   return (
     <div className={"user-profile-container"}>
-      <span className={"profile-title"}>User Profile</span>
+      <span className={"profile-title"}>
+        {userInfo?.firstName + " " + userInfo?.lastName}
+      </span>
+      <span className={"profile-username"}>{"@" + userInfo?.username}</span>
       <span className={"profile-item"}>{"Email: " + userInfo?.email}</span>
-      <span className={"profile-item"}>
-        {"FirstName: " + userInfo?.firstName}
-      </span>
-      <span className={"profile-item"}>
-        {"LastName: " + userInfo?.lastName}
-      </span>
+      <span className={"posts-container-title"}>{"User posts: "}</span>
       <div className={"posts-container"}>
-        {userPostsList?.map((post) => (
-          <Post post={post} />
-        ))}
+        {userPostsList.length > 0 ? (
+          userPostsList?.map((post) => <Post post={post} />)
+        ) : (
+          <span className={"no-posts-message"}>This user has no posts yet</span>
+        )}
       </div>
     </div>
   );
