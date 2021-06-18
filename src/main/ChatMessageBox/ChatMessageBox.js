@@ -12,18 +12,19 @@ const ChatMessageBox = ({
   selectedChatUser,
   updateMyChats,
   setSelectedChatUser,
+  getMyChats,
 }) => {
   const [clientConnected, setClientConnected] = useState(false);
   const [messages, setMessages] = useState([]);
   let clientRef = useRef(undefined);
   const { userInfo } = useSelector(sessionSelector);
 
-  const getChatMessageMutation = useMutation((messageId) =>
-    http.get(`/messages/${messageId}`)
+  const readChatMessageMutation = useMutation((messageId) =>
+    http.put(`readMessage/${messageId}`)
   );
 
   const getChatMessagesMutation = useMutation((chatInfo) =>
-    http.get(`/messages/${chatInfo.senderId}/${chatInfo.recipientId}`)
+    http.get(`messages/${chatInfo.senderId}/${chatInfo.recipientId}`)
   );
 
   useEffect(() => {
@@ -39,13 +40,8 @@ const ChatMessageBox = ({
     };
   };
 
-  const getChatMessage = (msg) => {
-    getChatMessageMutation.mutate(msg.id, {
-      onSuccess: (data) => {
-        const receivedMessage = parseMessage(data);
-        setMessages([...messages, receivedMessage]);
-      },
-    });
+  const readChatMessage = (msg) => {
+    readChatMessageMutation.mutate(msg.id);
   };
 
   const getChatMessages = () => {
@@ -57,6 +53,7 @@ const ChatMessageBox = ({
       onSuccess: (data) => {
         const messageList = data.map((message) => parseMessage(message));
         setMessages(messageList);
+        getMyChats();
       },
     });
   };
@@ -79,6 +76,7 @@ const ChatMessageBox = ({
         message: selfMsg.message,
       };
       setMessages([...messages, messageSend]);
+      getMyChats();
       return true;
     } catch (e) {
       return false;
@@ -88,7 +86,9 @@ const ChatMessageBox = ({
   const onMessageReceive = (msg, topic) => {
     updateMyChats(msg);
     if (selectedChatUser?.userId === msg.senderId) {
-      getChatMessage(msg);
+      readChatMessage(msg);
+      const receivedMessage = parseMessage(msg);
+      setMessages([...messages, receivedMessage]);
       updateMyChats({ ...msg, unreadCount: msg.unreadCount - 1 });
     }
   };
@@ -104,13 +104,12 @@ const ChatMessageBox = ({
             className={"chat-close-icon"}
             onClick={() => setSelectedChatUser(undefined)}
           />
+          <span
+            className={"chat-title"}
+          >{`Private Chat with @${selectedChatUser.userName}`}</span>
           <TalkBox
-            topic={
-              selectedChatUser
-                ? `Private Chat with ${selectedChatUser?.userName}`
-                : "Private Chat"
-            }
-            currentUserId={userInfo.username}
+            topic={""}
+            currentUserId={userInfo.userId}
             currentUser={userInfo.username}
             messages={messages}
             onSendMessage={sendMessage}

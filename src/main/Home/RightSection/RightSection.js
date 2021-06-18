@@ -211,7 +211,9 @@ const RightSection = () => {
                 className={"show-chat-btn"}
                 variant="contained"
                 color="primary"
-                onClick={() => setSelectedChatUser(chatInfo)}
+                onClick={() => {
+                  setSelectedChatUser(chatInfo);
+                }}
               >
                 Chat
               </Button>
@@ -231,6 +233,7 @@ const RightSection = () => {
           selectedChatUser={selectedChatUser}
           updateMyChats={updateMyChats}
           setSelectedChatUser={setSelectedChatUser}
+          getMyChats={getMyChats}
         />
       </div>
     </div>
