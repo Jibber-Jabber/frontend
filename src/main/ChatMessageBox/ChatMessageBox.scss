@@ -1,0 +1,11 @@
+.chat-box-container {
+  position: relative;
+
+  .chat-close-icon {
+    color: white;
+    position: absolute;
+    right: 9px;
+    top: 9px;
+    cursor: pointer;
+  }
+}

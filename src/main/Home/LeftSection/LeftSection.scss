@@ -1,0 +1,22 @@
+
+
+.left-section-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  .logout-btn {
+    margin-bottom: 10px;
+  }
+
+  .user-info {
+    color: white;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+
+    .user-first-last-name {
+      color: orange;
+    }
+  }
+}

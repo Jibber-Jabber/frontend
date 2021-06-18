@@ -1,0 +1,33 @@
+.home-container {
+  display: flex;
+  margin-left: 20%;
+
+  .text-field {
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active
+    {
+      -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
+      -webkit-text-fill-color: white !important;
+    }
+
+    .MuiInputLabel-outlined {
+      color: white;
+    }
+
+    .MuiOutlinedInput-root {
+      color: white;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border-color: white;
+    }
+
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+      border-color: orange;
+    }
+  }
+}
+

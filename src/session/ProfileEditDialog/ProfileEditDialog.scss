@@ -1,0 +1,68 @@
+.profile-dialog-container {
+  .profile-dialog-btn-open {
+    &.MuiButton-containedPrimary {
+      background-color: orange;
+    }
+  }
+}
+
+#profile-dialog {
+
+  .MuiPaper-root {
+    background-color: #717171;
+  }
+
+  .form-and-title-container {
+    padding: 20px;
+
+    #form-dialog-title {
+      color: orange;
+
+      .MuiTypography-h6 {
+        font-size: 25px;
+      }
+    }
+
+    .profile-dialog-form {
+      display: flex;
+      flex-direction: column;
+
+      .submit-btn {
+        margin-top: 20px;
+        margin-right: 20px;
+        align-self: flex-end;
+
+        &.MuiButton-containedPrimary {
+          background-color: orange;
+        }
+      }
+    }
+
+    .text-field {
+      margin: 20px;
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active
+      {
+        -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
+        -webkit-text-fill-color: white !important;
+      }
+
+      .MuiInputLabel-outlined {
+        color: white;
+      }
+
+      .MuiOutlinedInput-root {
+        color: white;
+      }
+
+      .MuiOutlinedInput-notchedOutline {
+        border-color: white;
+      }
+    }
+
+
+  }
+}

@@ -1,0 +1,33 @@
+.user-profile-container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  color: white;
+  height: 97.5vh;
+
+  .posts-container-title {
+    margin-top: 20px;
+    font-size: 15px;
+    color: orange;
+  }
+
+  .posts-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 20px;
+  }
+
+  .profile-title {
+    font-size: 20px;
+    color: orange;
+  }
+
+  .profile-username {
+    margin-top: 5px;
+  }
+
+  .profile-item {
+    margin-top: 20px;
+  }
+}
