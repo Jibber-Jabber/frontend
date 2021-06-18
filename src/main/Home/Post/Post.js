@@ -9,7 +9,6 @@ import {
   IconButton,
 } from "@material-ui/core";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import { DeleteOutline, Favorite } from "@material-ui/icons";
 import { useMutation } from "react-query";
 import * as http from "../../../utils/http";
@@ -17,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sessionSelector } from "../../../session/sessionSlice";
 import { setPostsList } from "../../mainSlice";
 
-const Post = ({ post }) => {
+const Post = ({ post, handlePostListUpdate }) => {
   const dispatch = useDispatch();
 
   const deletePostMutation = useMutation(() => {
@@ -49,7 +48,10 @@ const Post = ({ post }) => {
     deletePostMutation.mutate(
       {},
       {
-        onSuccess: () => getPosts(),
+        onSuccess: () => {
+          getPosts();
+          handlePostListUpdate?.();
+        },
       }
     );
   };
@@ -62,7 +64,10 @@ const Post = ({ post }) => {
           getPostsMutation.mutate(
             {},
             {
-              onSuccess: (data) => dispatch(setPostsList(data)),
+              onSuccess: (data) => {
+                dispatch(setPostsList(data));
+                handlePostListUpdate?.();
+              },
             }
           ),
       }
@@ -77,7 +82,10 @@ const Post = ({ post }) => {
           getPostsMutation.mutate(
             {},
             {
-              onSuccess: (data) => dispatch(setPostsList(data)),
+              onSuccess: (data) => {
+                dispatch(setPostsList(data));
+                handlePostListUpdate?.();
+              },
             }
           ),
       }

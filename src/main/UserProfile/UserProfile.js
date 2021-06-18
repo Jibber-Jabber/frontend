@@ -18,7 +18,7 @@ const UserProfile = ({ match }) => {
     return http.get(`posts/byUser/${userId}`);
   });
 
-  useEffect(() => {
+  const getUserInfo = () => {
     getUserInfoMutation.mutate(
       {},
       {
@@ -27,6 +27,9 @@ const UserProfile = ({ match }) => {
         },
       }
     );
+  };
+
+  const getUserPostsList = () => {
     getUserPostsListMutation.mutate(
       {},
       {
@@ -35,7 +38,16 @@ const UserProfile = ({ match }) => {
         },
       }
     );
+  };
+
+  useEffect(() => {
+    getUserInfo();
+    getUserPostsList();
   }, []);
+
+  const handlePostListUpdate = () => {
+    getUserPostsList();
+  };
 
   return (
     <div className={"user-profile-container"}>
@@ -47,7 +59,9 @@ const UserProfile = ({ match }) => {
       <span className={"posts-container-title"}>{"User posts: "}</span>
       <div className={"posts-container"}>
         {userPostsList.length > 0 ? (
-          userPostsList?.map((post) => <Post post={post} />)
+          userPostsList?.map((post) => (
+            <Post post={post} handlePostListUpdate={handlePostListUpdate} />
+          ))
         ) : (
           <span className={"no-posts-message"}>This user has no posts yet</span>
         )}
